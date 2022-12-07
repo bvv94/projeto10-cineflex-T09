@@ -1,12 +1,11 @@
 import Top from './Top';
-import Content from './Content';
-import Action from './Action';
+import Content from './Content';  
 
 export default function App() {
+
   return (
     <>
       <Top />
-      <Action/>
       <Content/>
     </>
   );

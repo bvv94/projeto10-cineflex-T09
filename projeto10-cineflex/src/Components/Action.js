@@ -1,13 +1,21 @@
 import styled from "styled-components"
+import { useState } from "react";
 
-export default function Action() {
-    return (
-        <>
-            <Instruction>
-                Selecione o filme
-            </Instruction>
-        </>
-    )
+export default function Action({screen, setScreen}) {
+
+    const [text, useText] = useState("Selecione o filme");
+
+    if(screen == 0){
+        return (
+            <>
+                <Instruction>
+                    <p>{text}</p>
+                </Instruction>
+            </>
+        )
+    }
+
+    
 }
 
 const Instruction = styled.div`
