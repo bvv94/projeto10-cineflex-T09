@@ -8,7 +8,7 @@ export default function Content() {
 
     return (
         <>
-            <Action screen={screen} setScreen={setScreen}/>
+            <Action />
             <Options/>
         </>
     )

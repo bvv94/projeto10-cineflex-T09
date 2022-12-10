@@ -1,22 +1,28 @@
 import styled from "styled-components"
 import { useState } from "react";
 
-export default function Action({screen, setScreen}) {
+export default function Action({ screen, setScreen }) {
 
     const [text, useText] = useState("Selecione o filme");
 
-    if(screen == 0){
-        return (
-            <>
-                <Instruction>
-                    <p>{text}</p>
-                </Instruction>
-            </>
-        )
-    }
 
-    
+    return (
+        <>
+            <Instruction>
+                <p>{text}</p>
+            </Instruction>
+        </>
+    )
 }
+// function Print(text){
+//     return (
+//         <>
+//             <Instruction>
+//                 <p>{text}</p>
+//             </Instruction>
+//         </>
+//     )
+// }
 
 const Instruction = styled.div`
     width: 100%;
