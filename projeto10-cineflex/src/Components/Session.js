@@ -1,6 +1,6 @@
 import Action from "./Action"
 import Choosen from "./Choosen"
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
@@ -8,9 +8,9 @@ import styled from "styled-components";
 export default function Session() {
 
     const { idFilme } = useParams();
-    const [day, setDay] = useState([])
-    const [time, setTime] = useState([])
+    const [day, setDay] = useState([]);
     const [posters, setPosters] = useState([]);
+    const [idsession, setIdsession] = useState([]);
 
     useEffect(() => {
         const promise = axios.get(
@@ -23,25 +23,26 @@ export default function Session() {
         });
     }, []);
 
-    console.log(day)
+    console.log(posters)
 
     return (
         <>
             <Action text="Selecione o horário" />
-            Session OK
             <Div>
                 {day.length === 0 ? ("Carregando...") : (
                     day.map((d) => (
-                        <Day key={d.id}>
-                            {d.weekday} {d.date}
-                        </Day>
-                        
-                        )                                                
+                        <DayAndTime key={d.id}>
+                            <Day>{d.weekday} - {d.date}</Day>
+                            <Times>
+                                {d.showtimes.map((t) =>
+                                    <Link to={`/assentos/${t.id}`} key={t.id}>
+                                        <Time key={t.name}>{t.name}</Time>
+                                    </Link>
+                                )}
+                            </Times>
+                        </DayAndTime>
+                    )
                     ))}
-
-
-                <Day>Quinta-feira - 24/06/2021</Day>
-                <Time>15:00</Time>
 
             </Div>
             <Choosen poster={posters.posterURL} title={posters.title} />
@@ -49,8 +50,11 @@ export default function Session() {
     )
 }
 
-const Sessiondata = styled.div`
-    /* background-color: brown; */
+const Times = styled.div`
+    display: flex;
+    
+`
+const DayAndTime = styled.div`
 `
 const Div = styled.div`
     background-color: beige;
@@ -61,7 +65,7 @@ const Div = styled.div`
 
 `
 const Day = styled.p`
-    width:241px;
+    width:260px;
     height: 35px;
     font-family:'roboto';
     font-weight: 400;
@@ -81,6 +85,7 @@ const Time = styled.button`
     border-color: #E8833A;
     border-radius: 3px;
     display: flex;
+    margin-right: 18px;
     justify-content: center;
     align-items: center;
 `
