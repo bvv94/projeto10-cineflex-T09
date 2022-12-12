@@ -36,7 +36,7 @@ export default function Session() {
                             <Times>
                                 {d.showtimes.map((t) =>
                                     <Link to={`/assentos/${t.id}`} key={t.id}>
-                                        <Time key={t.name}>{t.name}</Time>
+                                        <Time key={t.name} poster={posters.posterURL} title={posters.title} >{t.name}</Time>
                                     </Link>
                                 )}
                             </Times>

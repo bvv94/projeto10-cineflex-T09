@@ -1,19 +1,22 @@
 import styled from "styled-components"
 
-export default function Choosen({poster, title}) {
+export default function Choosen({ poster, title, time, day }) {
 
 
     return (
         <>
             <Choosenmovie>
-                <img src = {poster} alt={title} />
-                <p>{title}</p>
+                <img src={poster} alt={title} />
+                <div>
+                    <p>{title}</p>
+                    <p>{day} - {time}</p>
+                </div>
             </Choosenmovie>
         </>
     )
 }
 
-const Choosenmovie = styled.div `
+const Choosenmovie = styled.div`
     width: 100%;
     height: 117px;
     margin-top: 30px;

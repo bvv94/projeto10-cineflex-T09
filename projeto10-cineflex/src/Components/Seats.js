@@ -1,3 +1,6 @@
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import Action from "./Action"
 import Choosen from "./Choosen"
@@ -5,20 +8,44 @@ import { CINZA, CINZABORDA, VERDE, VERDEBORDA, AMARELO, AMARELOBORDA } from "./C
 
 export default function Seats() { //colocar ID do filme
 
-    let seats = []
+    const { idSessao } = useParams();
+    const [seat, setSeat] = useState([]);
+    const [posters, setPosters] = useState([]);
+    const [info, setInfo] = useState([]);
+    const [daymovie, setDaymovie] = useState ([]);
 
-    console.log(Array.isArray(seats))
+    useEffect(() => {
+        const promise = axios.get(
+            `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
+        );
 
-    for (let i = 1; i <= 50; i++) {
-        seats[i] = i;
-    }
+        promise.then((res) => {
+            setSeat(res.data.seats);
+            setPosters(res.data.movie);
+            setInfo(res.data);
+            setDaymovie(res.data.day);
+        });
+    }, []);
+
+    console.log(info)
+    console.log(seat)
+    console.log(posters)
+    console.log(daymovie)
 
     return (
         <>
             <Action text="Selecione o(s) assento(s)" />
             <Div>
                 <Place>
-                    {seats.map((s, index) => <Seat key={index} onClick={Save({ s })} >{s}</Seat>)}
+                    {seat.length === 0 ? ("carregando...") :
+                        (seat.map((s, index) =>
+                            s.isAvailable ? (
+                                <Link key={index}>
+                                    <Seat >{s.name}</Seat>
+                                </Link>) : 
+                                (<Link key={index}>
+                                    <SeatOcuppied >{s.name}</SeatOcuppied>
+                                </Link>)))}
                 </Place>
                 <Options>
                     <ul>
@@ -49,19 +76,15 @@ export default function Seats() { //colocar ID do filme
                 <Ok>Reservar assento(s)</Ok>
 
             </Div>
-
-
-
-            
-
-            <Choosen />
+            <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday}/>
         </>
     )
 }
 
-function Save({ s }) {
-    return console.log(s)
+function mark(){
+
 }
+
 
 const Ok = styled.button`
     margin-top: 20px;
@@ -123,6 +146,21 @@ const Seat = styled.button`
         cursor: pointer;
     }
 `
+const SeatOcuppied = styled.button`
+background-color: ${AMARELO};
+border: 1px solid ${AMARELOBORDA};
+border-radius: 12px;
+width: 26px;
+height: 26px;
+margin:  0 7px 18px 0;
+display: flex;
+justify-content: center;
+align-items: center;
+:hover {
+    cursor: pointer;
+}
+`
+
 const Place = styled.div`
     width: 350px;
     height: 250px;
@@ -144,6 +182,11 @@ const Options = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    div {
+        font-family: 'roboto';
+        font-weight: 400;
+        font-size: 13px;
+    }
     ul {
         display: flex;
         justify-content: space-around;
