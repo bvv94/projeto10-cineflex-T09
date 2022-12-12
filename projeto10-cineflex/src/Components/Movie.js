@@ -2,6 +2,7 @@ import Action from "./Action";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function Movie() {
 
@@ -11,41 +12,43 @@ export default function Movie() {
         const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
         promise.then((res) => {
             setPosters(res.data)
-            // for (let i = 0; i <= res.data.length; i++) {
-            //     setPosters(posters = res.data[i].posterURL)
-            // }
         })
         promise.catch((err) => console.log(err.response.data))
     }, [])
 
     console.log(posters)
-    // console.log(Array.isArray(posters))
-
-    if (!posters.length) {
-        <h1>Carregando...</h1>
-    }
 
     return (
         <>
             <Action text="Selecione o filme" />
-            {/* {posters.map((poster, index) => <Imgposter key={index}><img src={poster} alt="poster" /></Imgposter>)} */}
             <ChooseMovie>
-                { posters.length === 0 ? ("Carregando...") : (
-                    posters.map((poster, index) => 
-                        <Imgposter key={index}> <img src={poster.posterURL} alt={poster.title}/></Imgposter>
+                {posters.length === 0 ? ("Carregando...") : (
+                    posters.map((poster) =>
+                        <Imgposter>
+                            <Link to={`/sessoes/${poster.id}`}>
+                                <img src={poster.posterURL} alt={poster.title} />
+                            </Link>
+                        </Imgposter>
                     ))}
-                    
+
             </ChooseMovie>
         </>
     )
 }
 
-const ChooseMovie = styled.div`
+function ChosenMovie({ id, title }) {
+    return (console.log(`A id: ${id} e o titulo: ${title}`))
+}
 
+const ChooseMovie = styled.div`
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 `
 
-const Imgposter = styled.div`
-    background-color: blue;
+const Imgposter = styled.button`
+    margin: 13px 23px 13px 23px;
     img {
         width: 129px;
         height: 193px;
