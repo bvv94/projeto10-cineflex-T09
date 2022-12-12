@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Movie() {
 
-    let [posters, setPosters] = useState([]);
+    const [posters, setPosters] = useState([]);
 
     useEffect(() => {
         const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
@@ -32,10 +32,6 @@ export default function Movie() {
             </ChooseMovie>
         </>
     )
-}
-
-function ChosenMovie({ id, title }) {
-    return (console.log(`A id: ${id} e o titulo: ${title}`))
 }
 
 const ChooseMovie = styled.div`

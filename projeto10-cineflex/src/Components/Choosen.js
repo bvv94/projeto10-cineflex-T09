@@ -1,14 +1,13 @@
 import styled from "styled-components"
 
-export default function Choosen({id}) {
+export default function Choosen({poster, title}) {
 
 
     return (
         <>
             <Choosenmovie>
-
-                imagem
-                moviename
+                <img src = {poster} alt={title} />
+                <p>{title}</p>
             </Choosenmovie>
         </>
     )
@@ -23,4 +22,14 @@ const Choosenmovie = styled.div `
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    img {
+        width: 64px;
+        height: 89px;
+        margin: 0 14px 0 10px;
+    }
+    p{
+        font-family: 'roboto';
+        font-size: 26px;
+        font-weight: 400;
+    }
 `
