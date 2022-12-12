@@ -6,13 +6,19 @@ import Action from "./Action"
 import Choosen from "./Choosen"
 import { CINZA, CINZABORDA, VERDE, VERDEBORDA, AMARELO, AMARELOBORDA } from "./Colours"
 
-export default function Seats() { //colocar ID do filme
+export default function Seats() {
 
     const { idSessao } = useParams();
     const [seat, setSeat] = useState([]);
     const [posters, setPosters] = useState([]);
     const [info, setInfo] = useState([]);
-    const [daymovie, setDaymovie] = useState ([]);
+    const [daymovie, setDaymovie] = useState([]);
+    const [buyername, setBuyername] = useState([]);
+    const [buyercpf, setBuyercpf] = useState([]);
+    const [available, setAvailable] = useState (CINZA);
+
+    const [bought, setBought] = useState(false);
+    let ids = [];
 
     useEffect(() => {
         const promise = axios.get(
@@ -32,6 +38,9 @@ export default function Seats() { //colocar ID do filme
     console.log(posters)
     console.log(daymovie)
 
+    console.log(buyername);
+    console.log(buyercpf);
+
     return (
         <>
             <Action text="Selecione o(s) assento(s)" />
@@ -40,12 +49,16 @@ export default function Seats() { //colocar ID do filme
                     {seat.length === 0 ? ("carregando...") :
                         (seat.map((s, index) =>
                             s.isAvailable ? (
-                                <Link key={index}>
+                                <div key={index} onClick={
+                                    // ((() => setBought(!bought),
+                                    ((() => setAvailable(VERDE),
+                                        () => mark(s.id, s.name, ids)))
+                                }>
                                     <Seat >{s.name}</Seat>
-                                </Link>) : 
-                                (<Link key={index}>
+                                </div>) :
+                                (<div key={index}>
                                     <SeatOcuppied >{s.name}</SeatOcuppied>
-                                </Link>)))}
+                                </div>)))}
                 </Place>
                 <Options>
                     <ul>
@@ -66,22 +79,35 @@ export default function Seats() { //colocar ID do filme
 
                 <Info>
                     <div><p>Nome do comprador: </p>
-                        <input placeholder="Digite seu nome..."></input>
+                        <input placeholder="Digite seu nome..."
+                            type="text"
+                            onChange={(e) => setBuyername(e.target.value)}
+                            value={buyername}
+                        ></input>
                     </div>
                     <div><p>CPF do comprador: </p>
-                        <input placeholder="Digite seu CPF..."></input>
+                        <input placeholder="Digite seu CPF..."
+                            type="number"
+                            onChange={(e) => setBuyercpf(e.target.value)}
+                            value={buyercpf}
+                        ></input>
                     </div>
                 </Info>
 
                 <Ok>Reservar assento(s)</Ok>
 
             </Div>
-            <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday}/>
+            <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday} />
         </>
     )
 }
 
-function mark(){
+function mark(id, name, ids) {
+
+    console.log(name)
+
+    ids.push(name);
+    console.log(ids)
 
 }
 
@@ -131,9 +157,10 @@ const Info = styled.div`
         }
     }
 `
-
+/* background-color: ${(bought ? 'VERDE' : 'CINZA')}; */
 const Seat = styled.button`
-    background-color: ${CINZA};
+    background-color: ${(({ bought }) => bought ? 'VERDE' : 'CINZA')};
+    /* background-color: ${CINZA}; */
     border: 1px solid ${CINZABORDA};
     border-radius: 12px;
     width: 26px;
