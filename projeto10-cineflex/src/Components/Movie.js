@@ -16,15 +16,13 @@ export default function Movie() {
         promise.catch((err) => console.log(err.response.data))
     }, [])
 
-    console.log(posters)
-
     return (
         <>
             <Action text="Selecione o filme" />
             <ChooseMovie>
                 {posters.length === 0 ? ("Carregando...") : (
                     posters.map((poster) =>
-                        <Imgposter>
+                        <Imgposter key={poster.id}>
                             <Link to={`/sessoes/${poster.id}`}>
                                 <img src={poster.posterURL} alt={poster.title} />
                             </Link>
