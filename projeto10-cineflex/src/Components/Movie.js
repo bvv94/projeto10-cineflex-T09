@@ -19,7 +19,7 @@ export default function Movie() {
     return (
         <>
             <Action text="Selecione o filme" />
-            <ChooseMovie>
+            <ChooseMovie data-test="movie">
                 {posters.length === 0 ? ("Carregando...") : (
                     posters.map((poster) =>
                         <Imgposter key={poster.id}>

@@ -31,11 +31,11 @@ export default function Session() {
             <Div>
                 {day.length === 0 ? ("Carregando...") : (
                     day.map((d) => (
-                        <DayAndTime key={d.id}>
+                        <DayAndTime data-test="movie-day" key={d.id}>
                             <Day>{d.weekday} - {d.date}</Day>
                             <Times>
                                 {d.showtimes.map((t) =>
-                                    <Link to={`/assentos/${t.id}`} key={t.id}>
+                                    <Link data-test="showtime" to={`/assentos/${t.id}`} key={t.id}>
                                         <Time key={t.name} poster={posters.posterURL} title={posters.title} >{t.name}</Time>
                                     </Link>
                                 )}

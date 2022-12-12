@@ -49,14 +49,14 @@ export default function Seats() {
                     {seat.length === 0 ? ("carregando...") :
                         (seat.map((s, index) =>
                             s.isAvailable ? (
-                                <div key={index} onClick={
+                                <div data-test="seat" key={index} onClick={
                                     // ((() => setBought(!bought),
                                     ((() => setAvailable(VERDE),
                                         () => mark(s.id, s.name, ids)))
                                 }>
-                                    <Seat >{s.name}</Seat>
+                                    <Seat>{s.name}</Seat>
                                 </div>) :
-                                (<div key={index}>
+                                (<div data-test="seat" key={index}>
                                     <SeatOcuppied >{s.name}</SeatOcuppied>
                                 </div>)))}
                 </Place>
@@ -79,14 +79,14 @@ export default function Seats() {
 
                 <Info>
                     <div><p>Nome do comprador: </p>
-                        <input placeholder="Digite seu nome..."
+                        <input data-test="client-name" placeholder="Digite seu nome..."
                             type="text"
                             onChange={(e) => setBuyername(e.target.value)}
                             value={buyername}
                         ></input>
                     </div>
                     <div><p>CPF do comprador: </p>
-                        <input placeholder="Digite seu CPF..."
+                        <input data-test="client-cpf" placeholder="Digite seu CPF..."
                             type="number"
                             onChange={(e) => setBuyercpf(e.target.value)}
                             value={buyercpf}
@@ -94,7 +94,7 @@ export default function Seats() {
                     </div>
                 </Info>
 
-                <Ok>Reservar assento(s)</Ok>
+                <Ok><Link data-test="book-seat-btn" to="">Reservar assento(s)</Link></Ok>
 
             </Div>
             <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday} />

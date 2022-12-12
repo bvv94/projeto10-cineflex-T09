@@ -5,7 +5,7 @@ export default function Choosen({ poster, title, time, day }) {
 
     return (
         <>
-            <Choosenmovie>
+            <Choosenmovie data-test="footer">
                 <img src={poster} alt={title} />
                 <div>
                     <p>{title}</p>
