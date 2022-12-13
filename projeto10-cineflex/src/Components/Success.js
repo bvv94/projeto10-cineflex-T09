@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export default function Success() {
 
@@ -11,25 +11,39 @@ export default function Success() {
             <Green>
                 Pedido feito com sucesso!
             </Green>
-            <MovieInfo  data-test="movie-info">
-               
-            </MovieInfo>
-            <SeatsInfo data-test="seats-info">
+            <Align>
+                <MovieInfo data-test="movie-info">
+                    <Title>Filme e sessão</Title>
+                </MovieInfo>
 
-            </SeatsInfo>
-            <ClientInfo data-test="client-info">
-                    
-            </ClientInfo>
+                <SeatsInfo data-test="seats-info">
+                    <Title>Ingressos</Title>
+                </SeatsInfo>
 
+                <ClientInfo data-test="client-info">
+                    <Title>Comprador</Title>
+                </ClientInfo>
+            </Align>
 
             <Ok><Link data-test="go-home-btn" to="/">Voltar pra Home</Link></Ok>
         </Div>
     )
 }
 
+const Align = styled.div `
+    width: 95%;
+`
+const Title = styled.div`
+    color: #293845;
+    font-family: 'roboto';
+    font-weight: 700;
+    font-size: 24px;
+
+`
 const MovieInfo = styled.div`
 `
 const SeatsInfo = styled.div`
+    margin: 40px 0 40px 0;
 `
 const ClientInfo = styled.div`
 `
