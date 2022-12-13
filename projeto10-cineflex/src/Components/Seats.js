@@ -94,7 +94,7 @@ export default function Seats() {
                     </div>
                 </Info>
 
-                <Ok><Link data-test="book-seat-btn" to="">Reservar assento(s)</Link></Ok>
+                <Ok><Link data-test="book-seat-btn" to="/sucesso">Reservar assento(s)</Link></Ok>
 
             </Div>
             <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday} />

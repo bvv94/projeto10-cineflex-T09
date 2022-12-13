@@ -57,7 +57,6 @@ const Times = styled.div`
 const DayAndTime = styled.div`
 `
 const Div = styled.div`
-    background-color: beige;
     margin-left: 15px;
     margin-right: 15px;
     display:flex;
@@ -75,6 +74,7 @@ const Day = styled.p`
     align-items: center;
 `
 const Time = styled.button`
+    font-style: none;
     width: 83px;
     height: 43px;
     font-family: 'Roboto';
