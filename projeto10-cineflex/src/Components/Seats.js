@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Action from "./Action"
 import Choosen from "./Choosen"
+import Mark from './Mark';
 import { CINZA, CINZABORDA, VERDE, VERDEBORDA, AMARELO, AMARELOBORDA } from "./Colours"
 
 export default function Seats() {
@@ -15,9 +16,12 @@ export default function Seats() {
     const [daymovie, setDaymovie] = useState([]);
     const [buyername, setBuyername] = useState([]);
     const [buyercpf, setBuyercpf] = useState([]);
-    const [available, setAvailable] = useState (CINZA);
+    const [available, setAvailable] = useState(CINZA);
+    const [final, setFinal] = useState({});
+    let object = {}
 
     const [bought, setBought] = useState(false);
+
     let ids = [];
 
     useEffect(() => {
@@ -30,16 +34,56 @@ export default function Seats() {
             setPosters(res.data.movie);
             setInfo(res.data);
             setDaymovie(res.data.day);
+
         });
     }, []);
 
-    console.log(info)
     console.log(seat)
     console.log(posters)
+    console.log(info)
     console.log(daymovie)
-
     console.log(buyername);
     console.log(buyercpf);
+
+
+    function sendinfo(e) {
+
+        console.log(e)
+        console.log("entrou sendinfo")
+
+    }
+
+    // function Mark(object, final, setFinal, name, ids, info, posters) {
+
+    //     console.log(name)
+
+    //     ids.push(name);
+
+    //     console.log(ids)
+
+    //     console.log(info)
+
+    //     const a = info.day.date // dia/mes
+    //     const b = info.name  //hora
+    //     const c = posters.title //nome
+
+    //     useEffect(()=>{
+    //         setFinal(...final, ids, c, a, b)
+    //     },[]) 
+
+    //     console.log(final)
+    // }
+    function call(final, setFinal, name, ids, info, posters) {
+        console.log("entrou funcao call");
+
+        ids.push(name)
+
+        console.log(final)
+        console.log(name)
+        console.log(ids)
+        console.log(info)
+        console.log(posters)
+    }
 
     return (
         <>
@@ -49,11 +93,7 @@ export default function Seats() {
                     {seat.length === 0 ? ("carregando...") :
                         (seat.map((s, index) =>
                             s.isAvailable ? (
-                                <div data-test="seat" key={index} onClick={
-                                    // ((() => setBought(!bought),
-                                    ((() => setAvailable(VERDE),
-                                        () => mark(s.id, s.name, ids)))
-                                }>
+                                <div data-test="seat" key={index} onClick={() => call(final, setFinal, s.name, ids, info, posters)}>
                                     <Seat>{s.name}</Seat>
                                 </div>) :
                                 (<div data-test="seat" key={index}>
@@ -76,40 +116,33 @@ export default function Seats() {
 
                     </ul>
                 </Options>
-
                 <Info>
-                    <div><p>Nome do comprador: </p>
-                        <input data-test="client-name" placeholder="Digite seu nome..."
-                            type="text"
-                            onChange={(e) => setBuyername(e.target.value)}
-                            value={buyername}
-                        ></input>
-                    </div>
-                    <div><p>CPF do comprador: </p>
-                        <input data-test="client-cpf" placeholder="Digite seu CPF..."
-                            type="number"
-                            onChange={(e) => setBuyercpf(e.target.value)}
-                            value={buyercpf}
-                        ></input>
-                    </div>
+                    <form onSubmit={sendinfo}>
+                        <div><p>Nome do comprador: </p>
+                            <input data-test="client-name" placeholder="Digite seu nome..."
+                                type="text"
+                                onChange={(e) => setBuyername(e.target.value)}
+                                value={buyername}
+                            ></input>
+                        </div>
+                        <div><p>CPF do comprador: </p>
+                            <input data-test="client-cpf" placeholder="Digite seu CPF..."
+                                type="number"
+                                onChange={(e) => setBuyercpf(e.target.value)}
+                                value={buyercpf}
+                            ></input>
+                        </div>
+                    </form>
+
+                    <Ok type="submit"><Link data-test="book-seat-btn" to="/sucesso">Reservar assento(s)</Link></Ok>
                 </Info>
-
-                <Ok><Link data-test="book-seat-btn" to="/sucesso">Reservar assento(s)</Link></Ok>
-
             </Div>
             <Choosen poster={posters.posterURL} title={posters.title} time={info.name} day={daymovie.weekday} />
         </>
     )
 }
 
-function mark(id, name, ids) {
 
-    console.log(name)
-
-    ids.push(name);
-    console.log(ids)
-
-}
 
 
 const Ok = styled.button`
@@ -135,6 +168,7 @@ const Info = styled.div`
     flex-direction: column;
     margin-top: 41px;
     div{
+
         margin-top: 10px;
     }
     p{
@@ -195,7 +229,6 @@ const Place = styled.div`
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    ;
 `
 const Div = styled.div`
     display: flex;

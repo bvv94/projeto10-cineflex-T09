@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Bar from "./Bar";
 import Movie from "./Movie";
@@ -7,17 +8,18 @@ import Success from "./Success";
 
 export default function App() {
 
-    return (
-      <>
-        <BrowserRouter>
-          <Bar />
-          <Routes>
-            <Route path="/" element={<Movie />}></Route>
-            <Route path="/sessoes/:idFilme" element={<Session />}></Route>
-            <Route path="/assentos/:idSessao" element={<Seats />}></Route>
-            <Route path="/sucesso" element={<Success />}> </Route>
-          </Routes>
-        </BrowserRouter>
-      </>
-    );
-  }
+
+  return (
+    <>
+      <BrowserRouter>
+        <Bar />
+        <Routes>
+          <Route path="/" element={<Movie />}></Route>
+          <Route path="/sessoes/:idFilme" element={<Session />}></Route>
+          <Route path="/assentos/:idSessao" element={<Seats />}></Route>
+          <Route path="/sucesso" element={<Success />}> </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}

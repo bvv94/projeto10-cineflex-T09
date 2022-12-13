@@ -12,6 +12,9 @@ export default function Session() {
     const [posters, setPosters] = useState([]);
     const [idsession, setIdsession] = useState([]);
 
+    console.log({idFilme})
+
+
     useEffect(() => {
         const promise = axios.get(
             `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`
